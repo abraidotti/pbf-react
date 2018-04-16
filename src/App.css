@@ -1,0 +1,152 @@
+* {
+  box-sizing: border-box;
+  border-radius: 4px;
+  list-style-type: none;
+}
+
+html, body {
+  position: relative;
+  margin: 0.1em;
+  padding: 0.1em;
+  height: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Eczar', serif;
+}
+
+p {
+  font-family: 'Gentium Basic', serif;
+  padding: 0;
+}
+
+nav {
+  display: inline-block;
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+  background-color: HSLA(186, 60%, 48%, 0.3);
+}
+
+form {
+  margin: 1em auto;
+}
+
+section .panel {
+  display: inline-block;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+section .panel h2 {
+  padding-right: 1.5em;
+}
+
+section img {
+  width: 4em;
+  margin-top: 1em;
+  margin-left: 1em;
+}
+
+#weather-box {
+  line-height: 0.5em;
+  text-align: center;
+}
+
+#weather-box h2 {
+  font-size: 3em;
+  float: right;
+}
+
+#message-container {
+  text-align: left;
+  margin: 1em auto;
+}
+
+#warning-container {
+  margin-bottom: 1em;
+  background-color: HSLA(14, 100%, 60%, 0.7);
+  text-align: center;
+}
+
+.map {
+  height: 50%;
+  width: 100%;
+}
+
+.list {
+  height: 50%;
+  display: inline-block;
+  overflow: auto;
+}
+
+ul {
+  margin: 0 auto;
+}
+
+li {
+  margin: 0.2em 0;
+  padding: 0.2em;
+}
+
+li:hover {
+  background-color: HSLA(186, 60%, 48%, 0.3);
+}
+
+li.active {
+  background-color: HSLA(201, 60%, 48%, 0.6);
+}
+
+footer {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+  bottom: 0;
+  text-align: right;
+  text-decoration: none;
+  background-color: HSLA(186, 60%, 48%, 0.3);
+}
+
+@media (min-width: 667px) {
+  body {
+    font-size: 2vw;
+  }
+
+  section .panel {
+    display: inline-block;
+    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+    float: left;
+  }
+
+  form {
+    margin: 3em auto;
+  }
+
+  #message-container {
+    text-align: left;
+    width: 38%;
+    float: right;
+  }
+
+  #map {
+    height: 100%;
+    width: 60%;
+    float: left;
+  }
+
+  .list {
+    height: 68%;
+    width: 40%;
+    float: right;
+  }
+
+  footer {
+    position: absolute;
+    height: 2em;
+    bottom: -17em;
+  }
+}
