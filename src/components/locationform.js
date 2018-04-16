@@ -30,7 +30,8 @@ class LocationForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    let GKEY = 'AIzaSyC87bAzg2HQb3-tE6uUeib_10VMmMdU1kY';
+    let GKEY = process.env.REACT_APP_GKEY;
+    console.log(GKEY);
     this.setState({isLoading: true});
     this.setState({errorMessage: ''});
 
@@ -58,7 +59,7 @@ class LocationForm extends Component {
       }
     })
     .catch(error => {
-      this.setState({ errorMessage: error});
+      this.setState({ errorMessage: 'bad address'});
     })
   };
 
