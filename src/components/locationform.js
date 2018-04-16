@@ -31,7 +31,9 @@ class LocationForm extends Component {
   handleSubmit(event) {
     event.preventDefault();
     let GKEY = process.env.REACT_APP_GKEY;
+    let OWMKEY = process.env.REACT_APP_OWMKEY;
     console.log(GKEY);
+    console.log(OWMKEY);
     this.setState({isLoading: true});
     this.setState({errorMessage: ''});
 
