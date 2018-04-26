@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
+import { GoogleApiWrapper } from 'google-maps-react';
+
 import Nav from './components/nav';
 import LocationForm from './components/locationform';
 import Footer from './components/footer';
+
 import './App.css';
+
+const env = require('env2')('../.env');
 
 class App extends Component {
   render() {
@@ -16,4 +21,6 @@ class App extends Component {
   }
 }
 
-export default App;
+export default GoogleApiWrapper({
+  apiKey: process.env.REACT_APP_GKEY,
+})(App)
