@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import Forecast from '../components/forecast';
-import Map from '../components/map';
-import StationsList from '../components/stationslist';
+import Console from '../components/console'; 
 
 class LocationForm extends Component {
   constructor() {
@@ -92,9 +90,7 @@ class LocationForm extends Component {
               </fieldset>
           </form>
           <div id="error-container">{this.state.errorMessage}</div>
-          <Forecast {...props}/>
-          <Map {...props}/>
-          <StationsList {...props}/>
+          <Console {...props}/>
         </div>
       </div>
     )

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-class Forecast extends React.Component {
+class Forecast extends Component {
   constructor(props) {
     super(props);
     this.state = {latLng: props.latLng}

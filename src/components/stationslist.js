@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-class StationsList extends React.Component {
+class StationsList extends Component {
   constructor(props) {
     super(props);
     this.state = {latLng: props.latLng}
