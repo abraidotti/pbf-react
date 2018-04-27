@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 
-class StationsList extends Component {
+export default class StationsList extends Component {
   constructor(props) {
     super(props);
-    this.state = {latLng: props.latLng}
   };
 
   render(){
@@ -17,11 +16,9 @@ class StationsList extends Component {
 
     return(
       <div id="stations-list">
-        <h1>Stations List</h1>
-        <h2>props lat lng = {this.props.latLng}.</h2>
+        <p>Stations List</p>
+        <p>props lat lng = {this.props.latLng}.</p>
       </div>
     )
   };
 };
-
-export default StationsList;

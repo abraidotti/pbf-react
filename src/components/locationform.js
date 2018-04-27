@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Console from '../components/console'; 
+import Console from '../components/console';
 
 class LocationForm extends Component {
   constructor() {
@@ -28,14 +28,10 @@ class LocationForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    let GKEY = process.env.REACT_APP_GKEY;
-    let OWMKEY = process.env.REACT_APP_OWMKEY;
-    console.log(GKEY);
-    console.log(OWMKEY);
     this.setState({isLoading: true});
     this.setState({errorMessage: ''});
 
-    fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.query}&key=${GKEY}`)
+    fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.query}&key=${process.env.REACT_APP_GKEY}`)
     .then(response => {
       if (response.ok) {
         console.log('Validating location...');
@@ -51,6 +47,7 @@ class LocationForm extends Component {
             lng: data.results[0].geometry.location.lng,
             validLocation: true,
             isLoading: false,
+            locationData: data.results[0].geometry
           });
         return data;
       } else {
@@ -67,7 +64,8 @@ class LocationForm extends Component {
   render() {
     let props = {
       latLng: `${this.state.lat},${this.state.lng}`,
-      validLocation: this.state.validLocation
+      validLocation: this.state.validLocation,
+      locationData: this.state.locationData
     }
 
     return(

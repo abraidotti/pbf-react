@@ -1,21 +1,24 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { Map, Marker } from 'google-maps-react';
 
-class Map extends Component {
+export default class MapContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      latLng: props.latLng,
-      // temp locations
       locations: [
         { name: "New York County Supreme Court", location: {lat: 40.7143033, lng: -74.0036919} },
         { name: "Queens County Supreme Court", location: {lat: 40.7046946, lng: -73.8091145} },
         { name: "Kings County Supreme Court", location: {lat: 40.6940226, lng: -73.9890967} },
         { name: "Richmond County Supreme Court", location: {lat: 40.6412336, lng: -74.0768597} },
         { name: "Bronx Supreme Court", location: {lat: 40.8262388, lng: -73.9235238} }
-      ],
+      ]
     }
   };
+  // ======================
+  // ADD LOCATIONS TO STATE
+  // ======================
+
 
   componentDidMount() {
     this.loadMap(); // call loadMap function to load the google map
@@ -51,26 +54,16 @@ class Map extends Component {
     }
   }
 
-  render(){
+  render() {
     const style = { // MUST specify dimensions of the Google map or it will not work. Also works best when style is specified inside the render function and created as an object
-      width: '90vw', // 90vw basically means take up 90% of the width screen. px also works.
-      height: '75vh' // 75vh similarly will take up roughly 75% of the height of the screen. px also works.
-    };
+      width: '50%', // 90vw basically means take up 90% of the width screen. px also works.
+      height: '100%' // 75vh similarly will take up roughly 75% of the height of the screen. px also works.
+    }
 
-    if (!this.props.validLocation){
-      return(
-        <div id="map">
-          <p>Waiting for location to draw map</p>
-        </div>
-      )
-    };
-
-    return(
+    return ( // in our return function you must return a div with ref='map' and style.
       <div ref="map" style={style}>
         loading map...
       </div>
     )
-  };
-};
-
-export default Map;
+  }
+}

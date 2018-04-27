@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { GoogleApiWrapper } from 'google-maps-react';
+import './App.css';
 
 import Nav from './components/nav';
 import LocationForm from './components/locationform';
 import Footer from './components/footer';
-
-import './App.css';
 
 const env = require('env2')('../.env');
 
