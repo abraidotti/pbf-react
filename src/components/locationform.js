@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import Console from '../components/console';
+import WeatherContainer from '../components/weathercontainer';
+import MapContainer from '../components/mapcontainer';
+import StationsContainer from '../components/stationscontainer';
 
-class LocationForm extends Component {
+export default class LocationForm extends Component {
   constructor() {
     super();
     this.state = {
@@ -11,7 +13,7 @@ class LocationForm extends Component {
       validLocation: false,
       lat: '',
       lng: '',
-      locationData: {},
+      locationData: {}
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -32,42 +34,35 @@ class LocationForm extends Component {
     this.setState({errorMessage: ''});
 
     fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.query}&key=${process.env.REACT_APP_GKEY}`)
-    .then(response => {
-      if (response.ok) {
-        console.log('Validating location...');
-        return response.json()
-      }
-    })
-    .then(data => {
-      if (data.results[0].formatted_address.includes('Philadelphia, PA')){
-        console.log("Location valid.");
-        this.setState(
-          {
-            lat: data.results[0].geometry.location.lat,
-            lng: data.results[0].geometry.location.lng,
-            validLocation: true,
-            isLoading: false,
-            locationData: data.results[0].geometry
-          });
-        return data;
-      } else {
-        this.setState({ errorMessage: `Try a location in Philadelphia.`});
-        console.log(`formatted address: ${data.results[0].formatted_address}`);
-      }
-    })
-    .catch(error => {
-      this.setState({ errorMessage: 'bad address'});
-    })
+      .then(response => {
+        if (response.ok) {
+          console.log('Validating location...');
+          return response.json()
+        }
+      })
+      .then(data => {
+        if (data.results[0].formatted_address.includes('Philadelphia, PA')){
+          console.log("Location valid.");
+          this.setState(
+            {
+              lat: data.results[0].geometry.location.lat,
+              lng: data.results[0].geometry.location.lng,
+              validLocation: true,
+              isLoading: false,
+              locationData: data.results[0].geometry,
+            });
+          return data;
+        } else {
+          this.setState({ errorMessage: `Try a location in Philadelphia.`});
+          console.log(`formatted address: ${data.results[0].formatted_address}`);
+        }
+      })
+      .catch(error => {
+        this.setState({ errorMessage: 'bad address'});
+      })
   };
 
-
   render() {
-    let props = {
-      latLng: `${this.state.lat},${this.state.lng}`,
-      validLocation: this.state.validLocation,
-      locationData: this.state.locationData
-    }
-
     return(
       <div>
         <div className="locationFormContainer" className="panel">
@@ -84,15 +79,24 @@ class LocationForm extends Component {
                   onChange={this.handleInputChange} />
                 </label>
                 <input id="locationButton" type="submit" value="submit" />
-                <div id="errorContainer"></div>
+                <div id="errorContainer">{this.state.errorMessage}</div>
               </fieldset>
           </form>
-          <div id="error-container">{this.state.errorMessage}</div>
-          <Console {...props}/>
+
+              {this.state.validLocation ? (
+                <div>
+                  <WeatherContainer valid={this.state.validLocation}/>
+                  <MapContainer google={this.props.google}/>
+                  <StationsContainer stations={this.state.locationData}/>
+                </div>
+              ) : (
+                <div>
+                  <p>Waiting for valid location</p>
+                </div>
+              )}
+
         </div>
       </div>
     )
   };
 };
-
-export default LocationForm;
