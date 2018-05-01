@@ -1,52 +1,30 @@
 import React, {Component} from 'react';
-import { getWeather } from '../utils/forecast';
 
 export default class WeatherContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      forecast: {}
-    };
-  };
-
-  componentDidMount(){
-    let forecast = getWeather();
-    this.setState({ forecast: forecast })
-    console.log(this.state.forecast)
   };
 
   render(){
+    console.log(this.props.forecast)
+    // smooth out weather conditions and temperature
+    let conditions = this.props.forecast.weather[0].description.charAt(0).toUpperCase() + this.props.forecast.weather[0].description.slice(1);
+    let temp = Math.round((9/5) * (this.props.forecast.main.temp - 273) + 32);
+    let imgString = `http://openweathermap.org/img/w/${this.props.forecast.weather[0].icon}.png`;
+
     return (
       <div>
-      {this.state.forecast ? (
-        <p>weather ready to display</p>
-      ) : (
-        <p>Waiting for weather forecast</p>
-      )}
-    </div>
+        <div id="weather-container">
+          <p>{temp}</p>
+          <img src={imgString} alt="weather icon" />
+        </div>
+        {/* '01' ||  */}
+        { (this.props.forecast.weather[0].icon.includes('09' || '10' || '11' || '13')) &&
+          <div id="weather-message" className="message-warning">
+            <p>{conditions} today.</p>
+          </div>
+        }
+      </div>
     )
   };
 };
-
-//     if (!this.props.validLocation){
-//       return(
-//         <div id="weather-container">
-//           <h1>Waiting on location to render weather</h1>
-//         </div>
-//       )
-//     };
-//
-//     return(
-//       <div id="weather-container">
-//         <ul>
-//           <p>Weather items</p>
-//           {this.props.forecast.keys(subjects).map((item, i) =>
-//             (
-//               <li className="travelcompany-input" key={i}>
-//                 <span className="input-label">key: {i} Name: {subjects[item]}</span>
-//               </li>
-//             )
-//         </ul>
-// )}
-//       </div>
-//     )
