@@ -13,11 +13,30 @@ export default class LocationForm extends Component {
       validLocation: false,
       lat: '',
       lng: '',
-      locationData: {}
+      locationData: {},
+      stations: [],
+      forecast: {}
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  };
+
+  componentDidMount(){
+    let forecast = fetch(`http://api.openweathermap.org/data/2.5/weather?q=Philadelphia,USA&APPID=${process.env.REACT_APP_OWMKEY}`).then(function(response){
+      return response.json()
+    });
+
+    let stations = fetch('https://www.rideindego.com/stations/json/').then(function(response){
+      return response.json()
+    });
+
+    Promise.all([forecast, stations]).then( (values) => {
+      this.setState({
+        forecast: values[0],
+        stations: values[1]
+      });
+    });
   };
 
   handleInputChange(event) {
@@ -74,7 +93,7 @@ export default class LocationForm extends Component {
                   name="query"
                   type="text"
                   size="25"
-                  placeholder="Input your address."
+                  placeholder="Please input your address."
                   value={this.state.query}
                   onChange={this.handleInputChange} />
                 </label>
@@ -85,14 +104,15 @@ export default class LocationForm extends Component {
 
               {this.state.validLocation ? (
                 <div>
-                  <WeatherContainer valid={this.state.validLocation}/>
-                  <MapContainer google={this.props.google}/>
-                  <StationsContainer stations={this.state.locationData}/>
+                  <WeatherContainer forecast={this.state.forecast}/>
+                  {/* <MapContainer google={this.props.google}/> */}
+                  <StationsContainer
+                    location={`${this.state.lat}, ${this.state.lng}`}
+                    stations={this.state.stations}
+                  />
                 </div>
               ) : (
-                <div>
-                  <p>Waiting for valid location</p>
-                </div>
+                <div></div>
               )}
 
         </div>
