@@ -34,7 +34,7 @@ export default class LocationForm extends Component {
     Promise.all([forecast, stations]).then( (values) => {
       this.setState({
         forecast: values[0],
-        stations: values[1]
+        stations: values[1].features
       });
     });
   };
@@ -55,6 +55,7 @@ export default class LocationForm extends Component {
     fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.query}&key=${process.env.REACT_APP_GKEY}`)
       .then(response => {
         if (response.ok) {
+          this.setState({ validLocation: false });
           console.log('Validating location...');
           return response.json()
         }
@@ -67,6 +68,7 @@ export default class LocationForm extends Component {
               lat: data.results[0].geometry.location.lat,
               lng: data.results[0].geometry.location.lng,
               validLocation: true,
+              errorMessage: '',
               isLoading: false,
               locationData: data.results[0].geometry,
             });
@@ -76,9 +78,9 @@ export default class LocationForm extends Component {
           console.log(`formatted address: ${data.results[0].formatted_address}`);
         }
       })
-      .catch(error => {
-        this.setState({ errorMessage: 'bad address'});
-      })
+      // .catch(error => {
+      //   this.setState({ errorMessage: 'bad address'});
+      // })
   };
 
   render() {
@@ -105,9 +107,14 @@ export default class LocationForm extends Component {
               {this.state.validLocation ? (
                 <div>
                   <WeatherContainer forecast={this.state.forecast}/>
-                  {/* <MapContainer google={this.props.google}/> */}
+                  <MapContainer
+                    google={window.google}
+                    location={[this.state.lat, this.state.lng]}
+                    stations={this.state.stations}
+                    />
                   <StationsContainer
-                    location={`${this.state.lat}, ${this.state.lng}`}
+                    google={this.props.google}
+                    location={[this.state.lat, this.state.lng]}
                     stations={this.state.stations}
                   />
                 </div>

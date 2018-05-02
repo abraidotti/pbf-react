@@ -1,53 +1,57 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { Map, Marker } from 'google-maps-react';
+import { getClosestStations } from '../utils/stations';
 
 export default class MapContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      locations: [
-        { name: "New York County Supreme Court", location: {lat: 40.7143033, lng: -74.0036919} },
-        { name: "Queens County Supreme Court", location: {lat: 40.7046946, lng: -73.8091145} },
-        { name: "Kings County Supreme Court", location: {lat: 40.6940226, lng: -73.9890967} },
-        { name: "Richmond County Supreme Court", location: {lat: 40.6412336, lng: -74.0768597} },
-        { name: "Bronx Supreme Court", location: {lat: 40.8262388, lng: -73.9235238} }
+      stationMarkers: [
+        { name: "Test marker", location: {lat: 39.9526, lng: -75.1652} },
+        { name: "Test marker 2", location: {lat: 39.9526, lng: -75.18} },
+        { name: "Test marker 3", location: {lat: 39.9526, lng: -75.13} },
       ]
     }
   };
-  // ======================
-  // ADD LOCATIONS TO STATE
-  // ======================
-
 
   componentDidMount() {
-    this.loadMap(); // call loadMap function to load the google map
+    let closestStations = getClosestStations(this.props.location, this.props.stations);
+
+    Promise.all([closestStations])
+    .then( (values) => {
+      this.setState({
+        stationMarkers: values[0],
+      })
+      console.log(this.state.stationMarkers);
+      this.loadMap();
+    })
   }
 
   loadMap() {
+    // this function is boilerplate from the google-maps-react docs
     if (this.props && this.props.google) { // checks to make sure that props have been passed
       const {google} = this.props; // sets props equal to google
       const maps = google.maps; // sets maps to google maps props
-
       const mapRef = this.refs.map; // looks for HTML div ref 'map'. Returned in render below.
       const node = ReactDOM.findDOMNode(mapRef); // finds the 'map' div in the React DOM, names it node
 
       const mapConfig = Object.assign({}, {
-        center: {lat: 40.7485722, lng: -74.0068633}, // sets center of google map to NYC.
+        center: {lat: this.props.location[0], lng: this.props.location[1]}, // sets center of google map to NYC.
         zoom: 11, // sets zoom. Lower numbers are zoomed further out.
         mapTypeId: 'roadmap' // optional main map layer. Terrain, satellite, hybrid or roadmap--if unspecified, defaults to roadmap.
       })
 
       this.map = new maps.Map(node, mapConfig); // creates a new Google map on the specified node (ref='map') with the specified configuration set above.
 
-  // ==================
-  // ADD MARKERS TO MAP
-  // ==================
-      this.state.locations.forEach( location => { // iterate through locations saved in state
-        const marker = new google.maps.Marker({ // creates a new Google maps Marker object.
-          position: {lat: location.location.lat, lng: location.location.lng}, // sets position of marker to specified location
-          map: this.map, // sets markers to appear on the map we just created on line 35
-          title: location.name // the title of the marker is set to the name of the location
+      this.state.stationMarkers.forEach( station => {
+        console.log(station.geometry.coordinates[0]);
+        const marker = new google.maps.Marker({
+          position: {
+            lat: station.geometry.coordinates[1],
+            lng: station.geometry.coordinates[0]
+          },
+          map: this.map,
+          title: station.properties.name
         });
       })
 
@@ -55,12 +59,13 @@ export default class MapContainer extends Component {
   }
 
   render() {
-    const style = { // MUST specify dimensions of the Google map or it will not work. Also works best when style is specified inside the render function and created as an object
-      width: '50%', // 90vw basically means take up 90% of the width screen. px also works.
-      height: '100%' // 75vh similarly will take up roughly 75% of the height of the screen. px also works.
+    const style = {
+      width: '60vw',
+      height: '80vh',
+      float: 'left'
     }
 
-    return ( // in our return function you must return a div with ref='map' and style.
+    return (
       <div ref="map" style={style}>
         loading map...
       </div>
