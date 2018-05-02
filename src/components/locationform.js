@@ -105,19 +105,19 @@ export default class LocationForm extends Component {
           </form>
 
               {this.state.validLocation ? (
-                <div>
-                  <WeatherContainer forecast={this.state.forecast}/>
-                  <MapContainer
-                    google={window.google}
-                    location={[this.state.lat, this.state.lng]}
-                    stations={this.state.stations}
+                  <div>
+                    <WeatherContainer forecast={this.state.forecast}/>
+                    <MapContainer
+                      google={window.google}
+                      location={[this.state.lat, this.state.lng]}
+                      stations={this.state.stations}
+                      />
+                    <StationsContainer
+                      google={this.props.google}
+                      location={[this.state.lat, this.state.lng]}
+                      stations={this.state.stations}
                     />
-                  <StationsContainer
-                    google={this.props.google}
-                    location={[this.state.lat, this.state.lng]}
-                    stations={this.state.stations}
-                  />
-                </div>
+                  </div>
               ) : (
                 <div></div>
               )}

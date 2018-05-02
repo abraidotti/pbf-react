@@ -23,18 +23,17 @@ export default class StationsContainer extends Component {
 
   render(){
     return this.state.closestStations.length ? (
-        <div>
+        <div id="stations-list">
         {
           this.state.closestStations.map( (station, index) =>
-            <div id="stations-list" key={index} className="panel">
+            <li id={`btn-${index}`} key={station.properties.name} className='panel'>
               <h4>{station.properties.name}</h4>
               <p>{station.properties.addressStreet}</p>
               <p><span>bikes available: {station.properties.bikesAvailable} | </span>
               <span>open docks: {station.properties.docksAvailable}</span></p>
-            </div>
+            </li>
           )
         }
-        <p>stations are ready</p>
       </div>
     ) : (
       <div>

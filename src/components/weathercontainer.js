@@ -6,7 +6,6 @@ export default class WeatherContainer extends Component {
   };
 
   render(){
-    console.log(this.props.forecast)
     // smooth out weather conditions and temperature
     let conditions = this.props.forecast.weather[0].description.charAt(0).toUpperCase() + this.props.forecast.weather[0].description.slice(1);
     let temp = Math.round((9/5) * (this.props.forecast.main.temp - 273) + 32);
@@ -14,13 +13,13 @@ export default class WeatherContainer extends Component {
 
     return (
       <div>
-        <div id="weather-container">
-          <p>{temp}</p>
+        <div id="weather-box">
+          <h2>{temp}</h2>
           <img src={imgString} alt="weather icon" />
         </div>
         {/* '01' ||  */}
         { (this.props.forecast.weather[0].icon.includes('09' || '10' || '11' || '13')) &&
-          <div id="weather-message" className="message-warning">
+          <div id="warning-container">
             <p>{conditions} today.</p>
           </div>
         }
