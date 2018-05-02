@@ -43,7 +43,7 @@ export default class MapContainer extends Component {
 
       this.map = new maps.Map(node, mapConfig); // creates a new Google map on the specified node (ref='map') with the specified configuration set above.
 
-      this.state.stationMarkers.forEach( station => {
+      this.state.stationMarkers.forEach( (station, index) => {
         console.log(station.geometry.coordinates[0]);
         const marker = new google.maps.Marker({
           position: {
@@ -53,8 +53,15 @@ export default class MapContainer extends Component {
           map: this.map,
           title: station.properties.name
         });
+        marker.addListener("click", () => {
+          // toggle "active" class for styling
+          let active = document.querySelector('.active');
+          if (active) {
+            active.classList.remove('active');
+          };
+          document.querySelector(`#btn-${index}`).classList.toggle('active');
+        });
       })
-
     }
   }
 
