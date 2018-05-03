@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 
 export default class WeatherContainer extends Component {
-  constructor(props) {
-    super(props);
-  };
+  // constructor(props) {
+  //   super(props);
+  // };
 
   render(){
     // smooth out weather conditions and temperature
@@ -13,7 +13,7 @@ export default class WeatherContainer extends Component {
 
     return (
       <div>
-        <div id="weather-box">
+        <div id="weather-box" className="panel">
           <h2>{temp}</h2>
           <img src={imgString} alt="weather icon" />
         </div>

@@ -37,14 +37,13 @@ export default class MapContainer extends Component {
 
       const mapConfig = Object.assign({}, {
         center: {lat: this.props.location[0], lng: this.props.location[1]}, // sets center of google map to NYC.
-        zoom: 11, // sets zoom. Lower numbers are zoomed further out.
-        mapTypeId: 'roadmap' // optional main map layer. Terrain, satellite, hybrid or roadmap--if unspecified, defaults to roadmap.
+        zoom: 12, // sets zoom. Lower numbers are zoomed further out.
+        mapTypeId: 'roadmap', // optional main map layer. Terrain, satellite, hybrid or roadmap--if unspecified, defaults to roadmap.
       })
 
       this.map = new maps.Map(node, mapConfig); // creates a new Google map on the specified node (ref='map') with the specified configuration set above.
 
       this.state.stationMarkers.forEach( (station, index) => {
-        console.log(station.geometry.coordinates[0]);
         const marker = new google.maps.Marker({
           position: {
             lat: station.geometry.coordinates[1],
@@ -68,7 +67,7 @@ export default class MapContainer extends Component {
   render() {
     const style = {
       width: '60vw',
-      height: '80vh',
+      height: '70vh',
       float: 'left'
     }
 

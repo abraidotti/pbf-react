@@ -86,7 +86,7 @@ export default class LocationForm extends Component {
   render() {
     return(
       <div>
-        <div className="locationFormContainer" className="panel">
+        <div className="panel">
           <form onSubmit={this.handleSubmit}>
             <fieldset>
               <legend>Location Search</legend>

@@ -139,9 +139,9 @@ footer {
     float: right;
   }
 
-  footer {
+  /* footer {
     position: absolute;
     height: 2em;
     bottom: -17em;
-  }
+  } */
 }

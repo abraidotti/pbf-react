@@ -26,7 +26,7 @@ export default class StationsContainer extends Component {
         <div id="stations-list">
         {
           this.state.closestStations.map( (station, index) =>
-            <li id={`btn-${index}`} key={station.properties.name} className='panel'>
+            <li id={`btn-${index}`} key={`btn-${index}`} className='panel'>
               <h4>{station.properties.name}</h4>
               <p>{station.properties.addressStreet}</p>
               <p><span>bikes available: {station.properties.bikesAvailable} | </span>
