@@ -23,7 +23,7 @@ export default class LocationForm extends Component {
   };
 
   componentDidMount(){
-    let forecast = fetch(`http://api.openweathermap.org/data/2.5/weather?q=Philadelphia,USA&APPID=${process.env.REACT_APP_OWMKEY}`).then(function(response){
+    let forecast = fetch(`https://api.openweathermap.org/data/2.5/weather?q=Philadelphia,USA&APPID=${process.env.REACT_APP_OWMKEY}`).then(function(response){
       return response.json()
     });
 
