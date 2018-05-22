@@ -9,7 +9,7 @@ export default class WeatherContainer extends Component {
     // smooth out weather conditions and temperature
     let conditions = this.props.forecast.weather[0].description.charAt(0).toUpperCase() + this.props.forecast.weather[0].description.slice(1);
     let temp = Math.round((9/5) * (this.props.forecast.main.temp - 273) + 32);
-    let imgString = `http://openweathermap.org/img/w/${this.props.forecast.weather[0].icon}.png`;
+    let imgString = `https://openweathermap.org/img/w/${this.props.forecast.weather[0].icon}.png`;
 
     return (
       <div>
