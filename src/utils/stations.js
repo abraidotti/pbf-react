@@ -5,10 +5,10 @@ export function getClosestStations(latLng, stationsObject) {
   let result = [];
 
   // first try to get all Indego stations within walking distance
-  for (let station in stationsObject.features) {
+  for (let station in stationsObject) {
     let stationLatLng = new window.google.maps.LatLng(
-      stationsObject=[station].geometry.coordinates[1],
-      stationsObject=[station].geometry.coordinates[0]
+      stationsObject[station].geometry.coordinates[1],
+      stationsObject[station].geometry.coordinates[0]
     );
 
     let distance = window.google.maps.geometry.spherical.computeDistanceBetween(userLatLng, stationLatLng);
