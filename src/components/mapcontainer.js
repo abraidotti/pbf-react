@@ -6,11 +6,7 @@ export default class MapContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      stationMarkers: [
-        { name: "Test marker", location: {lat: 39.9526, lng: -75.1652} },
-        { name: "Test marker 2", location: {lat: 39.9526, lng: -75.18} },
-        { name: "Test marker 3", location: {lat: 39.9526, lng: -75.13} },
-      ]
+      stationMarkers: []
     }
   };
 

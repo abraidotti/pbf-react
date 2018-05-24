@@ -78,9 +78,6 @@ export default class LocationForm extends Component {
           console.log(`formatted address: ${data.results[0].formatted_address}`);
         }
       })
-      // .catch(error => {
-      //   this.setState({ errorMessage: 'bad address'});
-      // })
   };
 
   render() {

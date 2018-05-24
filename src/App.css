@@ -29,7 +29,8 @@ nav {
 }
 
 form {
-  margin: 1em auto;
+  display: flex;
+  width: 100vw;
 }
 
 section .panel {
@@ -50,18 +51,9 @@ section img {
 }
 
 #weather-box {
+  display: block;
   line-height: 0.5em;
   text-align: center;
-}
-
-#weather-box h2 {
-  font-size: 3em;
-  float: right;
-}
-
-#message-container {
-  text-align: left;
-  margin: 1em auto;
 }
 
 #warning-container {
@@ -70,13 +62,17 @@ section img {
   text-align: center;
 }
 
-.list {
-  height: 50%;
+#map {
+  width: 100%;
+}
+
+#stations-list {
   display: inline-block;
-  overflow: auto;
 }
 
 ul {
+  height: 70vh;
+  overflow-y: auto;
   margin: 0 auto;
 }
 
@@ -94,11 +90,11 @@ li.active {
 }
 
 footer {
-  position: relative;
-  display: block;
+  position: sticky;
+  display: inline-block;
   width: 100%;
   margin: 0 auto;
-  bottom: 0;
+  line-height: 1em;
   text-align: right;
   text-decoration: none;
   background-color: HSLA(186, 60%, 48%, 0.3);
@@ -109,6 +105,11 @@ footer {
     font-size: 2vw;
   }
 
+  form {
+    display: flex;
+    width: 30vw;
+  }
+
   section .panel {
     display: inline-block;
     width: 50%;
@@ -117,14 +118,11 @@ footer {
     float: left;
   }
 
-  form {
-    margin: 3em auto;
-  }
-
-  #message-container {
-    text-align: left;
-    width: 38%;
-    float: right;
+  #weather-box {
+    width: 60vw;
+    display: flex;
+    line-height: 0.5em;
+    text-align: center;
   }
 
   #map {
@@ -133,15 +131,11 @@ footer {
     float: left;
   }
 
-  .list {
-    height: 68%;
-    width: 40%;
+  #stations-list {
+    height: 50%;
+    width: 35%;
+    display: inline;
     float: right;
   }
 
-  footer {
-    position: absolute;
-    height: 2em;
-    bottom: -17em;
-  }
 }

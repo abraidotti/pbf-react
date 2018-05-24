@@ -23,7 +23,9 @@ export default class StationsContainer extends Component {
 
   render(){
     return this.state.closestStations.length ? (
-        <div id="stations-list">
+      <div id="stations-list">
+        <p>Click on a marker to highlight a station.</p>
+        <ul>
         {
           this.state.closestStations.map( (station, index) =>
             <li id={`btn-${index}`} key={station.properties.name} className='panel'>
@@ -34,6 +36,7 @@ export default class StationsContainer extends Component {
             </li>
           )
         }
+      </ul>
       </div>
     ) : (
       <div>
