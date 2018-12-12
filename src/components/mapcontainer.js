@@ -12,8 +12,6 @@ export class MapContainer extends Component {
   };
 
   componentDidMount() {
-    
-
     let closestStations = getClosestStations(this.props.location, this.props.stations);
 
     Promise.all([closestStations])
