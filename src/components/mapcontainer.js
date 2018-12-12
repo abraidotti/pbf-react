@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { getClosestStations } from '../utils/stations';
+import {GoogleApiWrapper} from 'google-maps-react';
 
-export default class MapContainer extends Component {
+export class MapContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -11,6 +12,8 @@ export default class MapContainer extends Component {
   };
 
   componentDidMount() {
+    
+
     let closestStations = getClosestStations(this.props.location, this.props.stations);
 
     Promise.all([closestStations])
@@ -75,3 +78,7 @@ export default class MapContainer extends Component {
     )
   }
 }
+
+export default GoogleApiWrapper({
+  apiKey: (`${process.env.REACT_APP_GKEY}`)
+})(MapContainer)

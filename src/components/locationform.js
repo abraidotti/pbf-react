@@ -23,15 +23,14 @@ export default class LocationForm extends Component {
   };
 
   componentDidMount(){
-    let forecast = fetch(`https://api.openweathermap.org/data/2.5/weather?q=Philadelphia,USA&APPID=${process.env.REACT_APP_OWMKEY}`).then(function(response){
-      return response.json()
-    });
+    let forecast = fetch(`https://sandro-cors.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?q=Philadelphia,USA&APPID=${process.env.REACT_APP_OWMKEY}`)
+    .then(response => response.json())
 
-    let stations = fetch('https://www.rideindego.com/stations/json/').then(function(response){
-      return response.json()
-    });
+    let stations = fetch('https://www.rideindego.com/stations/json/')
+    .then(response => response.json())
 
-    Promise.all([forecast, stations]).then( (values) => {
+    Promise.all([forecast, stations])
+    .then( (values) => {
       this.setState({
         forecast: values[0],
         stations: values[1].features
@@ -49,41 +48,32 @@ export default class LocationForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.setState({isLoading: true});
-    this.setState({errorMessage: ''});
+    this.setState({ isLoading: true });
+    this.setState({ errorMessage: '' });
 
     fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.query}&key=${process.env.REACT_APP_GKEY}`)
-      .then(response => {
-        if (response.ok) {
-          this.setState({ validLocation: false });
-          console.log('Validating location...');
-          return response.json()
-        }
-      })
-      .then(data => {
-        if (data.results[0].formatted_address.includes('Philadelphia, PA')){
-          console.log("Location valid.");
-          this.setState(
-            {
-              lat: data.results[0].geometry.location.lat,
-              lng: data.results[0].geometry.location.lng,
-              validLocation: true,
-              errorMessage: '',
-              isLoading: false,
-              locationData: data.results[0].geometry,
-            });
-          return data;
-        } else {
-          this.setState({ errorMessage: `Try a location in Philadelphia.`});
-          console.log(`formatted address: ${data.results[0].formatted_address}`);
-        }
-      })
-  };
+    .then(response => response.json())
+    .then(data => {
+      if (data.results[0].formatted_address === 'Philadelphia, PA, USA'){
+        this.setState({
+            lat: data.results[0].geometry.location.lat,
+            lng: data.results[0].geometry.location.lng,
+            validLocation: true,
+            errorMessage: '',
+            isLoading: false,
+            locationData: data.results[0].geometry,
+        });
+      } else {
+        this.setState({ errorMessage: `Try a location in Philadelphia.`});
+      }
+    })
+
+  }
 
   render() {
     return(
       <div>
-        <div className="locationFormContainer" className="panel">
+        <div className="locationFormContainer panel">
           <form onSubmit={this.handleSubmit}>
             <fieldset>
               <legend>Location Search</legend>
@@ -104,16 +94,8 @@ export default class LocationForm extends Component {
               {this.state.validLocation ? (
                   <div>
                     <WeatherContainer forecast={this.state.forecast}/>
-                    <MapContainer
-                      google={window.google}
-                      location={[this.state.lat, this.state.lng]}
-                      stations={this.state.stations}
-                      />
-                    <StationsContainer
-                      google={this.props.google}
-                      location={[this.state.lat, this.state.lng]}
-                      stations={this.state.stations}
-                    />
+
+
                   </div>
               ) : (
                 <div></div>

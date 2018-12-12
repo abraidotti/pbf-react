@@ -6,8 +6,6 @@ import Nav from './components/nav';
 import LocationForm from './components/locationform';
 import Footer from './components/footer';
 
-const env = require('env2')('../.env');
-
 class App extends Component {
   render() {
     return (

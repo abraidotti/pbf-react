@@ -3,13 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "ajv": "^6.4.0",
-    "env2": "^2.2.0",
-    "google-maps-react": "^1.1.0",
-    "npm": "^6.1.0",
+    "ajv": "^6.6.1",
+    "google-maps-react": "^1.1.11",
+    "npm": "^6.5.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "react-scripts": "^1.1.4"
+    "react-scripts": "^2.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -19,5 +18,11 @@
   },
   "devDependencies": {
     "google-maps": "^3.2.1"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

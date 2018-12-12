@@ -1,10 +1,6 @@
 import React, {Component} from 'react';
 
 export default class WeatherContainer extends Component {
-  constructor(props) {
-    super(props);
-  };
-
   render(){
     // smooth out weather conditions and temperature
     let conditions = this.props.forecast.weather[0].description.charAt(0).toUpperCase() + this.props.forecast.weather[0].description.slice(1);

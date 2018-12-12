@@ -1,5 +1,3 @@
-import {Map, GoogleApiWrapper} from 'google-maps-react';
-
 export function getClosestStations(latLng, stationsObject) {
   let userLatLng = new window.google.maps.LatLng(latLng[0], latLng[1]);
   let result = [];
