@@ -12,16 +12,9 @@ export class MapContainer extends Component {
   };
 
   componentDidMount() {
-    let closestStations = getClosestStations(this.props.location, this.props.stations);
+    console.log("location data mounted in mapcontainer.js", this.props)
+    getClosestStations(this.props.location.location, this.props.stations)
 
-    Promise.all([closestStations])
-    .then( (values) => {
-      this.setState({
-        stationMarkers: values[0],
-      })
-      console.log(this.state.stationMarkers);
-      this.loadMap();
-    })
   }
 
   loadMap() {

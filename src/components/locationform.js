@@ -25,6 +25,7 @@ export default class LocationForm extends Component {
     fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.query}&key=${process.env.REACT_APP_GKEY}`)
     .then(response => response.json())
     .then(data => {
+      console.log("data from locationform.js", data.results[0])
       if (data.results[0].formatted_address.includes('Philadelphia, PA')){
         this.props.sendLocation(data.results[0])
         this.setState({
@@ -35,7 +36,7 @@ export default class LocationForm extends Component {
         this.setState({ errorMessage: `Try a location in Philadelphia.`});
       }
     })
-
+    .catch(error => console.error(error))
   }
 
   render() {
