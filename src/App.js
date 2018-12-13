@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { GoogleApiWrapper } from 'google-maps-react';
-
 import './App.css';
 
 import LocationForm from './components/LocationForm';
@@ -50,18 +48,16 @@ class App extends Component {
           <p>Find the closest Indego bike stations!</p>
         </div>
         <LocationForm sendLocation={this.getLocation} />
-        {this.state.gotForecast ? <WeatherContainer forecast={this.state.forecast} /> : <p>waiting on weather</p>}
+        {this.state.gotForecast ?
+          <WeatherContainer forecast={this.state.forecast} />
+        : <p>waiting on weather</p>
+        }
       </nav>
-
         {this.state.gotLocation ?
-
-          <MapContainer
-            google={window.google}
-            location={this.state.location.geometry}
-            stations={this.state.stations}
-            />
-
-          : <p>waiting on location</p>
+          <div style={{height: 600, width: 600}}>
+          <MapContainer />
+          </div>
+        : <p>waiting on location</p>
         }
 
         <Footer />
@@ -70,6 +66,4 @@ class App extends Component {
   }
 }
 
-export default GoogleApiWrapper({
-  apiKey: process.env.REACT_APP_GKEY,
-})(App)
+export default App;

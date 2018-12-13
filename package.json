@@ -3,11 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/googlemaps": "^3.30.16",
+    "@types/markerclustererplus": "^2.1.33",
+    "@types/react": "^15.6.21",
     "ajv": "^6.6.1",
-    "google-maps-react": "^1.1.11",
     "npm": "^6.5.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-google-maps": "^9.4.5",
     "react-scripts": "^2.1.1"
   },
   "scripts": {

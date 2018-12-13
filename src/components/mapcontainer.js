@@ -1,75 +1,68 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import { getClosestStations } from '../utils/stations';
-import {GoogleApiWrapper} from 'google-maps-react';
+import React from 'react';
+import {GoogleMap, Marker, withGoogleMap, withScriptjs} from 'react-google-maps';
+import MarkerClusterer from "react-google-maps/lib/components/addons/MarkerClusterer";
 
-export class MapContainer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      stationMarkers: []
-    }
+const GoogleMapsWrapper = withScriptjs(withGoogleMap(props => {
+  const {onMapMounted, ...otherProps} = props;
+  return <GoogleMap {...otherProps} ref={c => {
+    onMapMounted && onMapMounted(c)
+  }}>{props.children}</GoogleMap>
+}));
+
+export default class MapPage extends React.Component {
+
+  state = {
+    markers: [],
   };
 
   componentDidMount() {
-    console.log("location data mounted in mapcontainer.js", this.props)
-    getClosestStations(this.props.location.location, this.props.stations)
-
+    console.log('Mounted @ ' + Date.now());
+    const url = "https://gist.githubusercontent.com/farrrr/dfda7dd7fccfec5474d3/raw/758852bbc1979f6c4522ab4e92d1c92cba8fb0dc/data.json";
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        this.setState({markers: data.photos});
+      });
   }
 
-  loadMap() {
-    // this function is boilerplate from the google-maps-react docs
-    if (this.props && this.props.google) { // checks to make sure that props have been passed
-      const {google} = this.props; // sets props equal to google
-      const maps = google.maps; // sets maps to google maps props
-      const mapRef = this.refs.map; // looks for HTML div ref 'map'. Returned in render below.
-      const node = ReactDOM.findDOMNode(mapRef); // finds the 'map' div in the React DOM, names it node
+  _mapRef = null;
 
-      const mapConfig = Object.assign({}, {
-        center: {lat: this.props.location[0], lng: this.props.location[1]}, // sets center of google map to NYC.
-        zoom: 11, // sets zoom. Lower numbers are zoomed further out.
-        mapTypeId: 'roadmap' // optional main map layer. Terrain, satellite, hybrid or roadmap--if unspecified, defaults to roadmap.
-      })
+  _handleMapMounted = (c) => {
+    if (!c || this._mapRef) return;
+    this._mapRef = c;
+    console.log('Ref set later @ ' + Date.now());
+  };
 
-      this.map = new maps.Map(node, mapConfig); // creates a new Google map on the specified node (ref='map') with the specified configuration set above.
-
-      this.state.stationMarkers.forEach( (station, index) => {
-        console.log(station.geometry.coordinates[0]);
-        const marker = new google.maps.Marker({
-          position: {
-            lat: station.geometry.coordinates[1],
-            lng: station.geometry.coordinates[0]
-          },
-          map: this.map,
-          title: station.properties.name
-        });
-        marker.addListener("click", () => {
-          // toggle "active" class for styling
-          let active = document.querySelector('.active');
-          if (active) {
-            active.classList.remove('active');
-          };
-          document.querySelector(`#btn-${index}`).classList.toggle('active');
-        });
-      })
-    }
-  }
+  _handleBoundsChanged = () => {
+    if (!this._mapRef) return;
+    const center = this._mapRef.getCenter();
+    const bounds = this._mapRef.getBounds();
+    console.log(center, bounds);
+  };
 
   render() {
-    const style = {
-      width: '60vw',
-      height: '80vh',
-      float: 'left'
-    }
-
     return (
-      <div ref="map" style={style}>
-        loading map...
-      </div>
+      <GoogleMapsWrapper
+        googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GKEY}&libraries=geometry,drawing,places`}
+        loadingElement={<div style={{height: `100%`}}/>}
+        containerElement={<div style={{height: `100%`}}/>}
+        mapElement={<div style={{height: `100%`}}/>}
+        defaultZoom={3}
+        defaultCenter={{lat: 25.0391667, lng: 121.525}}
+        onMapMounted={this._handleMapMounted}
+        onBoundsChanged={this._handleBoundsChanged}>
+        <MarkerClusterer
+          averageCenter
+          enableRetinaIcons
+          gridSize={60}>
+          {this.state.markers.map(marker => (
+            <Marker
+              key={marker.photo_id}
+              position={{lat: marker.latitude, lng: marker.longitude}}
+            />
+          ))}
+        </MarkerClusterer>
+      </GoogleMapsWrapper>
     )
   }
 }
-
-export default GoogleApiWrapper({
-  apiKey: (`${process.env.REACT_APP_GKEY}`)
-})(MapContainer)
