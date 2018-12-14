@@ -5,6 +5,7 @@ import LocationForm from './components/LocationForm';
 import WeatherContainer from './components/WeatherContainer';
 import MapContainer from './components/MapContainer';
 import Footer from './components/footer';
+import { getClosestStations } from './utils/stations';
 
 class App extends Component {
   constructor(props){
@@ -20,16 +21,19 @@ class App extends Component {
   }
 
   getLocation(locationObject){
+    
+
     this.setState({
       location: locationObject,
-      gotLocation: true
+      gotLocation: true,
     });
+
   }
 
   componentDidMount(){
     fetch('https://www.rideindego.com/stations/json/')
     .then(response => response.json())
-    .then(stations => this.setState({ stations: stations }))
+    .then(stations => this.setState({ stations: stations.features }))
     .catch(error => console.error(error))
     .finally( gotStations => console.log("all Indego stations from app.js: ", this.state.stations) )
 
@@ -54,8 +58,8 @@ class App extends Component {
         }
       </nav>
         {this.state.gotLocation ?
-          <div style={{height: 600, width: 600}}>
-          <MapContainer />
+          <div style={{height: '100vh', width: '100vw'}} >
+          <MapContainer location={this.state.location} stations={this.state.stations}/>
           </div>
         : <p>waiting on location</p>
         }

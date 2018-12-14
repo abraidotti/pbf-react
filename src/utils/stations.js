@@ -1,15 +1,17 @@
-export function getClosestStations(latLng, stationsObject) {
-  
-  let userLatLng = new window.google.maps.LatLng(latLng.lat, latLng.lng);
-  let result = [];
+export function getClosestStations(firstLocation, secondLocation) {
+  // this is a common algorithm known as the Haversine distance
+  const earthRadius = 6371; // km
 
-  console.log("lat lng google object from stations.js", userLatLng)
-  console.log("stations object in stations.js", stationsObject)
+  const diffLat = (secondLocation.lat-firstLocation.lat) * Math.PI / 180;
+  const diffLng = (secondLocation.lng-firstLocation.lng) * Math.PI / 180;
 
-  console.log("stationsObject.features[0].geometry.coordinates[1] in stations.js", stationsObject.features[0].geometry.coordinates[1])
+  const arc = Math.cos(
+          firstLocation.lat * Math.PI / 180) * Math.cos(secondLocation.lat * Math.PI / 180)
+          * Math.sin(diffLng/2) * Math.sin(diffLng/2)
+          + Math.sin(diffLat/2) * Math.sin(diffLat/2);
+  const line = 2 * Math.atan2(Math.sqrt(arc), Math.sqrt(1-arc));
 
+  const distance = earthRadius * line;
 
-
-  console.log("result from stations.js", result)
-
+  return distance;
 };
