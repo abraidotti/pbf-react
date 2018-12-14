@@ -21,12 +21,21 @@ class App extends Component {
   }
 
   getLocation(locationObject){
-    
+    // geolocation comes through as an object but station locations come in reversed arrays
+    let closestStations = this.state.stations.filter(station =>
+      getClosestStations(
+        locationObject.geometry.location,
+        { lat: station.geometry.coordinates[1],
+          lng: station.geometry.coordinates[0] }
+        ) < 1)
 
     this.setState({
       location: locationObject,
       gotLocation: true,
+      stations: closestStations
     });
+
+    console.log(this.state.stations)
 
   }
 
