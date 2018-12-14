@@ -26,14 +26,11 @@ export default class LocationForm extends Component {
     .then(response => response.json())
     .then(data => {
       console.log("data from locationform.js", data.results[0])
-      if (data.results[0].formatted_address.includes('Philadelphia, PA')){
-        this.props.sendLocation(data.results[0])
-        this.setState({
-            validLocation: true,
-            errorMessage: '',
-        });
+      if (data.results[0] == null || !data.results[0].formatted_address.includes('Philadelphia, PA')) {
+        this.setState({ errorMessage: 'Try a location in Philadelphia.' });
       } else {
-        this.setState({ errorMessage: `Try a location in Philadelphia.`});
+        this.props.sendLocation(data.results[0])
+        this.setState({ validLocation: true, errorMessage: '' });
       }
     })
     .catch(error => console.error(error))
