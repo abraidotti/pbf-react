@@ -5,13 +5,14 @@ import LocationForm from './components/LocationForm';
 import WeatherContainer from './components/WeatherContainer';
 import MapContainer from './components/MapContainer';
 import Footer from './components/footer';
-import { getClosestStations } from './utils/stations';
+import { getClosestStations } from './utils/haversine';
 
 class App extends Component {
   constructor(props){
     super(props)
     this.state = {
-      stations: {},
+      allStations: {},
+      closestStations: {},
       forecast: {},
       gotForecast: false,
       location: {},
@@ -21,30 +22,29 @@ class App extends Component {
   }
 
   getLocation(locationObject){
-    // geolocation comes through as an object but station locations come in reversed arrays
-    let closestStations = this.state.stations.filter(station =>
+    let closestStations =
+    this.state.allStations.filter(station =>
       getClosestStations(
         locationObject.geometry.location,
-        { lat: station.geometry.coordinates[1],
-          lng: station.geometry.coordinates[0] }
+        { lat: station.properties.latitude,
+          lng: station.properties.longitude }
         ) < 1)
 
     this.setState({
       location: locationObject,
       gotLocation: true,
-      stations: closestStations
+      closestStations: closestStations
     });
 
-    console.log(this.state.stations)
-
+    console.log(this.state.closestStations)
   }
 
   componentDidMount(){
     fetch('https://www.rideindego.com/stations/json/')
     .then(response => response.json())
-    .then(stations => this.setState({ stations: stations.features }))
+    .then(stations => this.setState({ allStations: stations.features }))
     .catch(error => console.error(error))
-    .finally( gotStations => console.log("all Indego stations from app.js: ", this.state.stations) )
+    .finally( gotStations => console.log("all Indego stations from app.js: ", this.state.allStations) )
 
     fetch(`https://sandro-cors.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?q=Philadelphia,USA&APPID=${process.env.REACT_APP_OWMKEY}`)
     .then(response => response.json())
@@ -68,7 +68,7 @@ class App extends Component {
       </nav>
         {this.state.gotLocation ?
           <div style={{height: '100vh', width: '100vw'}} >
-          <MapContainer location={this.state.location} stations={this.state.stations}/>
+          <MapContainer location={this.state.location} stations={this.state.closestStations}/>
           </div>
         : <p>waiting on location</p>
         }

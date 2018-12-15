@@ -19,10 +19,9 @@ export default class LocationForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.setState({ isLoading: true });
-    this.setState({ errorMessage: '' });
+    this.setState({ isLoading: true, errorMessage: '' })
 
-    fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.query}&key=${process.env.REACT_APP_GKEY}`)
+    fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.query ? this.state.query + '%20philadelphia' : null }&key=${process.env.REACT_APP_GKEY}`)
     .then(response => response.json())
     .then(data => {
       if (data.results[0] == null || !data.results[0].formatted_address.includes('Philadelphia, PA')) {
