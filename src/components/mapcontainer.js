@@ -42,7 +42,7 @@ export default class MapPage extends React.Component {
           key={station.properties.kioskId}
           position={{ lat: station.properties.latitude,
                       lng: station.properties.longitude }}
-          onClick={()=>{console.log(station.properties.name)}}
+          onClick={()=>{this.props.sendStation(station.properties.kioskId)}}
         />
       ))}
       </GoogleMapsWrapper>
