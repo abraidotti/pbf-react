@@ -67,7 +67,7 @@ class App extends Component {
         }
       </nav>
         {this.state.gotLocation ?
-          <div style={{height: '100vh', width: '100vw'}} >
+          <div style={{height: '60vh', width: '100vw'}} >
           <MapContainer location={this.state.location} stations={this.state.closestStations}/>
           </div>
         : <p>waiting on location</p>
