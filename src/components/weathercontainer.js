@@ -14,7 +14,7 @@ export default class WeatherContainer extends Component {
     return (
       <div>
         <p>{conditions} today.</p>
-        <div id="weather-box">
+        <div>
           <img src={imgString} alt="weather icon" />
           <h2>{temp}</h2>
         </div>
@@ -22,7 +22,7 @@ export default class WeatherContainer extends Component {
         {this.props.forecast.weather[0].icon.includes(
           "09" || "10" || "11" || "13"
         ) && (
-          <div id="warning-container">
+          <div>
             <p>{conditions} today.</p>
           </div>
         )}
