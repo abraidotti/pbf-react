@@ -23,10 +23,8 @@ class App extends Component {
   }
 
   getStation(id) {
-    console.log(id)
     let station = this.state.allStations.filter(station => station.properties.kioskId === id)
     this.setState( { station: station[0].properties, gotStation: true })
-    console.log(this.state.station.name)
   }
 
   getLocation(locationObject){
@@ -44,8 +42,6 @@ class App extends Component {
       closestStations: closestStations,
       gotStation: false
     });
-
-    console.log(this.state.closestStations)
   }
 
   componentDidMount(){
@@ -53,7 +49,6 @@ class App extends Component {
     .then(response => response.json())
     .then(stations => this.setState({ allStations: stations.features }))
     .catch(error => console.error(error))
-    .finally( gotStations => console.log("all Indego stations from app.js: ", this.state.allStations) )
 
     fetch(`https://sandro-cors.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?q=Philadelphia,USA&APPID=${process.env.REACT_APP_OWMKEY}`)
     .then(response => response.json())
@@ -64,24 +59,33 @@ class App extends Component {
   render() {
     return (
       <div>
-      <nav>
-        <div>
-          <h1>Philly Bike Finder</h1>
-
-          <p>Find the closest Indego bike stations!</p>
+      <nav className="navbar navbar-inverse">
+        <div className="container-fluid">
+          <div className="navbar-header">
+            <div className="navbar-brand h1">Philly Bike Finder</div>
+            <p>Find the closest Indego bike stations!</p>
+          </div>
         </div>
+      </nav>
+
         <LocationForm sendLocation={this.getLocation} />
+
+
+
         {this.state.gotForecast ?
           <WeatherContainer forecast={this.state.forecast} />
         : <p>waiting on weather</p>
         }
-      </nav>
-      {this.state.gotStation ?
-        <div>
-        <StationsContainer station={this.state.station} />
-        </div>
-      : <p>waiting on station</p>
-      }
+
+        {this.state.gotStation ?
+
+          <StationsContainer station={this.state.station} />
+          
+        : <p>waiting on station</p>
+        }
+
+
+
         {this.state.gotLocation ?
           <div style={{height: '60vh', width: '100vw'}} >
           <MapContainer

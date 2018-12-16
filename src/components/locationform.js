@@ -21,7 +21,7 @@ export default class LocationForm extends Component {
     event.preventDefault();
     this.setState({ isLoading: true, errorMessage: '' })
 
-    fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.query ? this.state.query + '%20philadelphia' : null }&key=${process.env.REACT_APP_GKEY}`)
+    fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.query}&key=${process.env.REACT_APP_GKEY}`)
     .then(response => response.json())
     .then(data => {
       if (data.results[0] == null || !data.results[0].formatted_address.includes('Philadelphia, PA')) {
@@ -37,7 +37,7 @@ export default class LocationForm extends Component {
   render() {
     return(
       <div>
-        <div className="locationFormContainer panel">
+        <div>
           <form onSubmit={this.handleSubmit}>
             <fieldset>
               <legend>Location Search</legend>
@@ -50,8 +50,8 @@ export default class LocationForm extends Component {
                   value={this.state.query}
                   onChange={this.handleInputChange} />
                 </label>
-                <input id="locationButton" type="submit" value="submit" />
-                <div id="errorContainer">{this.state.errorMessage}</div>
+                <input type="submit" value="submit" />
+                <div>{this.state.errorMessage}</div>
               </fieldset>
           </form>
         </div>

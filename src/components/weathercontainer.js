@@ -13,19 +13,8 @@ export default class WeatherContainer extends Component {
 
     return (
       <div>
-        <p>{conditions} today.</p>
-        <div>
-          <img src={imgString} alt="weather icon" />
-          <h2>{temp}</h2>
-        </div>
-        {/* to test, add: '01' ||  */}
-        {this.props.forecast.weather[0].icon.includes(
-          "09" || "10" || "11" || "13"
-        ) && (
-          <div>
-            <p>{conditions} today.</p>
-          </div>
-        )}
+        <span>{conditions} and {temp}° today.</span>
+        <img src={imgString} alt="weather icon" />
       </div>
     );
   }
