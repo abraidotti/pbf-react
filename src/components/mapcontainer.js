@@ -21,10 +21,6 @@ const GoogleMapsWrapper = withScriptjs(
 );
 
 export default class MapPage extends React.Component {
-  handleClick = (event) => {
-    console.log('clicked')
-  }
-
   render() {
     return (
       <GoogleMapsWrapper

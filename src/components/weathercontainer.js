@@ -12,7 +12,7 @@ export default class WeatherContainer extends Component {
     }.png`;
 
     return (
-      <div>
+      <div className="text-center">
         <span>{conditions} and {temp}° today.</span>
         <img src={imgString} alt="weather icon" />
       </div>

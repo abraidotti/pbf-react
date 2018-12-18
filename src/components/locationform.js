@@ -40,13 +40,13 @@ export default class LocationForm extends Component {
         <div>
           <form onSubmit={this.handleSubmit}>
             <fieldset>
-              <legend>Location Search</legend>
+              <legend>Search</legend>
                 <label>
                 <input
                   name="query"
                   type="text"
                   size="25"
-                  placeholder="Please input your address."
+                  placeholder="Try a location in Philly."
                   value={this.state.query}
                   onChange={this.handleInputChange} />
                 </label>
