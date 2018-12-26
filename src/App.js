@@ -4,8 +4,15 @@ import LocationForm from './components/LocationForm';
 import WeatherContainer from './components/WeatherContainer';
 import MapContainer from './components/MapContainer';
 import StationsContainer from './components/StationsContainer';
-import { getClosestStations } from './utils/haversine';
+import { getHaversineDistance } from './utils/haversine';
 import Footer from './components/Footer';
+
+const style = {
+  navbar: {
+    color: 'white',
+    backgroundColor: '#0086BF'
+  }
+}
 
 class App extends Component {
   constructor(props){
@@ -29,7 +36,7 @@ class App extends Component {
   getLocation(locationObject){
     let closestStations =
     this.state.allStations.filter(station =>
-      getClosestStations(
+      getHaversineDistance(
         locationObject.geometry.location,
         { lat: station.properties.latitude,
           lng: station.properties.longitude }
@@ -61,17 +68,26 @@ class App extends Component {
 
     return (
       <>
-        <Nav />
+        <nav className="navbar navbar-inverse" style={ style.navbar }>
+        <div className="container-fluid">
+          <div className="navbar-header">
+            <div className="navbar-brand h1">Philly Bike Finder</div>
+            <p>Find the closest Indego bike stations!</p>
+          </div>
+          <LocationForm sendLocation={this.getLocation} />
+        </div>
+      </nav>
+
         <div className="container" style={{ backgroundColor: '#98D735' }}>
           <div className="row">
-            <div className="col-sm-4">
+            <div className="col-sm-4" style={{ margin: '0 auto'}}>
 
               {this.state.gotForecast ?
                 <WeatherContainer forecast={this.state.forecast} />
               : <></>
               }
 
-              <LocationForm sendLocation={this.getLocation} />
+              
 
               {this.state.gotStation ?
                 <StationsContainer station={this.state.station} />

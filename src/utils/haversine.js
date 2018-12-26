@@ -1,5 +1,4 @@
-export function getClosestStations(firstLocation, secondLocation) {
-  // Haversine distance
+export function getHaversineDistance(firstLocation, secondLocation) {
   const earthRadius = 6371; // km
 
   const diffLat = (secondLocation.lat-firstLocation.lat) * Math.PI / 180;
