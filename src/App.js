@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Nav from './components/Nav';
 import LocationForm from './components/LocationForm';
 import WeatherContainer from './components/WeatherContainer';
 import MapContainer from './components/MapContainer';
@@ -9,8 +8,13 @@ import Footer from './components/Footer';
 
 const style = {
   navbar: {
-    color: 'white',
+    color: '#FFFFFF',
     backgroundColor: '#0086BF'
+  },
+  MapContainer: { 
+    width: `${window.innerHeight/2}px`, 
+    height: `${window.innerHeight/2}px`, 
+    margin: '0 auto' 
   }
 }
 
@@ -63,9 +67,6 @@ class App extends Component {
   }
 
   render() {
-    const mapHeight = window.innerHeight/2;
-    const mapWidth = window.innerHeight/2;
-
     return (
       <>
         <nav className="navbar navbar-inverse" style={ style.navbar }>
@@ -80,26 +81,22 @@ class App extends Component {
 
         <div className="container" style={{ backgroundColor: '#98D735' }}>
           <div className="row">
-            <div className="col-sm-4" style={{ margin: '0 auto'}}>
-
+            <div className="col-sm-4">
               {this.state.gotForecast ?
                 <WeatherContainer forecast={this.state.forecast} />
               : <></>
               }
-
-              
-
               {this.state.gotStation ?
                 <StationsContainer station={this.state.station} />
               : this.state.gotLocation ?
-                 <p>Click on a marker for more information.</p>
+                 <p className="text-center">Click on a marker for more information.</p>
                  : <></>
               }
             </div>
 
               {this.state.gotLocation ?
                 <div className="col-sm-8">
-                  <div style={{ width: `${mapWidth}px`, height: `${mapHeight}px` }}>
+                  <div style={ style.MapContainer}>
                     <MapContainer
                       location={this.state.location}
                       stations={this.state.closestStations}
