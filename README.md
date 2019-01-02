@@ -1,4 +1,7 @@
-## Philly Bike Finder
+### Philly Bike Finder
 
-* initial stages
-* made with create-react-app
+Input a location in Philadelphia to see the closest available Indego bike stations.
+
+## Jan 2, 2019 update
+- now uses bootstrap and mobile-first design
+- slightly better user experience
